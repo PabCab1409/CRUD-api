@@ -1,11 +1,18 @@
-const express = require("express");
-const app = express();
-const port = 3000;
+import express from "express";
+import cors from "cors";
+import { getAllEmployees } from "./db/mongoose.js";
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+const app = express();
+app.use(cors());
+
+const port = 5555;
+
+app.get("/employees", (req, res) => {
+  getAllEmployees().then((data) => {
+    res.end(JSON.stringify(data));
+  });
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`App listening on port ${port}`);
 });
